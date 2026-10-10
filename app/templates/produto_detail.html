@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ produto.nome }} | Detalhes do Produto</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 40px; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; border: 1px solid #ddd; padding: 20px; border-radius: 8px; }
+        .preco { font-size: 24px; color: #2e7d32; font-weight: bold; margin: 15px 0; }
+        .categoria { display: inline-block; background: #f0f0f0; padding: 5px 10px; border-radius: 4px; font-size: 14px; }
+        .estoque { font-weight: bold; }
+        .disponivel { color: #2e7d32; }
+        .esgotado { color: #c62828; }
+        .voltar { display: inline-block; margin-top: 20px; color: #1565c0; text-decoration: none; }
+        .voltar:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <span class="categoria">{{ produto.categoria.nome }}</span>
+        <h1>{{ produto.nome }}</h1>
+        
+        <p class="preco">R$ {{ produto.preco }}</p>
+
+        <div>
+            <h3>Descrição</h3>
+            <p>{{ produto.descricao|default:"Este produto não possui uma descrição cadastrada." }}</p>
+        </div>
+
+        <p class="estoque">
+            Status: 
+            {% if produto.estoque > 0 %}
+                <span class="disponivel">Em estoque ({{ produto.estoque }} unidades disponíveis)</span>
+            {% else %}
+                <span class="esgotado">Produto Esgotado</span>
+            {% endif %}
+        </p>
+
+        <p><small>Cadastrado em: {{ produto.criado_em|date:"d/m/Y H:i" }}</small></p>
+
+        <a href="{% url 'produto_list' %}" class="voltar">&larr; Voltar para a lista de produtos</a>
+    </div>
+
+</body>
+</html>
